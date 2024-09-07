@@ -1,13 +1,22 @@
 CXX = g++
 CXXFLAGS = -std=c++11
 
-all: mainPokemon
+OBJDIR = obj
 
-mainPokemon: Pokemon.o PokemonEletrico.o PokemonAquatico.o PokemonExplosivo.o Treinador.o Campeonato.o mainPokemon.o
+SRC = Pokemon.cpp PokemonEletrico.cpp PokemonAquatico.cpp PokemonExplosivo.cpp Treinador.cpp Campeonato.cpp mainPokemon.cpp
+OBJ = $(SRC:%.cpp=$(OBJDIR)/%.o)
+
+all: $(OBJDIR) mainPokemon
+
+mainPokemon: $(OBJ)
 	$(CXX) $(CXXFLAGS) -o $@ $^
 
-%.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c $<
+$(OBJDIR):
+	mkdir -p $(OBJDIR)
+
+$(OBJDIR)/%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	rm -f *.o mainPokemon
+	rm -f $(OBJDIR)/*.o mainPokemon
+	rm -rf $(OBJDIR)

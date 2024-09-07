@@ -1,9 +1,6 @@
-# Ignorar arquivos de objeto
 obj/*.o
 
-# Ignorar executáveis
 bin/mainPokemon
 
-# Ignorar outros arquivos temporários
 *.log
 *.tmp

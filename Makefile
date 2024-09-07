@@ -5,21 +5,29 @@ CXXFLAGS = -std=c++11 -Iinclude
 # Diretórios
 SRCDIR = src
 OBJDIR = obj
+BINDIR = bin
 
 # Arquivos fonte e objeto
 SRC = $(wildcard $(SRCDIR)/*.cpp)
 OBJ = $(SRC:$(SRCDIR)/%.cpp=$(OBJDIR)/%.o)
 
+# Nome do executável
+EXEC = $(BINDIR)/mainPokemon
+
 # Alvo principal
-all: $(OBJDIR) mainPokemon
+all: $(OBJDIR) $(BINDIR) $(EXEC)
 
 # Regras de construção
-mainPokemon: $(OBJ)
+$(EXEC): $(OBJ)
 	$(CXX) $(CXXFLAGS) -o $@ $^
 
 # Cria o diretório de objetos se não existir
 $(OBJDIR):
 	mkdir -p $(OBJDIR)
+
+# Cria o diretório de binário se não existir
+$(BINDIR):
+	mkdir -p $(BINDIR)
 
 # Compilação dos arquivos objeto
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
@@ -27,5 +35,5 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 
 # Limpeza
 clean:
-	rm -f $(OBJDIR)/*.o mainPokemon
-	rm -rf $(OBJDIR)
+	rm -f $(OBJDIR)/*.o $(EXEC)
+	rm -rf $(OBJDIR) $(BINDIR)
